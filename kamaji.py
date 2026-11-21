@@ -18,7 +18,17 @@ def reset_water_heater():
     Popen('timeout 1 gpioset -c gpiochip0 27=1') # activate hydrogenerator disconnect relay
     Popen('timeout 1 gpioset -c gpiochip0 27=0') # de-activate hydrogenerator disconnect relay
 
-print(get_hydro_stats())
+stats = get_hydro_stats()
+MIDLINE = stats['Midline amplitude:']
+MEAN = stats['Mean amplitude:']
+FREQUENCY = stats['Rough frequency:']
+ADJUSTMENT = stats['Volume adjustment:']
+print('type(MIDLINE)'+str(type(MIDLINE)))
+print('type(MEAN)'+str(type(MEAN)))
+print('type(FREQUENCY)'+str(type(FREQUENCY)))
+print('type(ADJUSTMENT)'+str(type(ADJUSTMENT))+str(ADJUSTMENT))
+print(MIDLINE+'	'+MEAN+'	'+FREQUENCY+'	'+ADJUSTMENT)
+#0.005859        0.006973        1638    64.000
 
 #{'Samples read:': '40960',
 # 'Length (seconds):': '0.853333',
