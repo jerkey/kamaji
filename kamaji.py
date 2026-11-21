@@ -1,4 +1,8 @@
 from subprocess import PIPE, Popen, TimeoutExpired
+from time import sleep
+from gpiozero import LED
+
+reset_relay = LED(27)
 
 def get_hydro_stats():
     p = Popen("timeout --preserve-status 1 sox -q -t alsa hw:1,0 -c 1 -n stat", shell=True, stdout=PIPE, stderr=PIPE)
@@ -18,17 +22,9 @@ def print_date():
     print(Popen("date +%Y%m%d_%H%M%S", shell=True, stdout=PIPE, stderr=PIPE).communicate()[0].decode(), end='')
 
 def reset_water_heater():
-    try:
-        process = Popen('gpioset -c gpiochip0 27=1', shell=True) # activate hydrogenerator disconnect relay
-        process.communicate(timeout=1)
-    except TimeoutExpired:
-        process.kill()
-
-    try:
-        process = Popen('gpioset -c gpiochip0 27=0', shell=True) # de-activate hydrogenerator disconnect relay
-        process.communicate(timeout=1)
-    except TimeoutExpired:
-        process.kill()
+    reset_relay.on() # disconnect hydro generator
+    sleep(1)
+    reset_relay.off() # re-connect hydrogenerator
 
     print('reset_water_heater ', end='')
     print_date()
