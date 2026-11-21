@@ -44,13 +44,13 @@ if __name__ == "__main__":
         print(water_heater_misbehaving, end='	')
         print_date()
 
-        if (MIDLINE > 0.01) and (MIDLINE < 0.07) and (FREQUENCY > 1200) and (ADJUSTMENT < 10):
-            print('+', end='')
+        if (MIDLINE > 0.01) and (MIDLINE < 0.07) and (FREQUENCY > 1300) and (ADJUSTMENT < 10):
+            print('#', end='')
             water_heater_misbehaving += 1
         else:
             water_heater_misbehaving = 0
 
-        if (water_heater_misbehaving > 2):
+        if (water_heater_misbehaving > 3):
             reset_water_heater()
             water_heater_misbehaving = 0
 
